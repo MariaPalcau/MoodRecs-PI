@@ -1,0 +1,10 @@
+.env
+upload/
+venv/
+old/
+songs/
+__pycache__/
+*.pyc
+*.pyo
+top_tracks.json
+user_embeddings.npy

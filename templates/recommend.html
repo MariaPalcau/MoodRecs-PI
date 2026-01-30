@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoodRecs</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/static/images/music-book.png">
+</head>
+<body>
+    <header class="site-header">
+        <a href="{{ url_for('home') }}" class="logo">
+            <h1>MoodRecs</h1>
+        </a>
+        <p class="tagline">Your recommendations</p>
+    </header>
+
+    {% if books %}
+<div class="container">
+    {% for book in books %}
+    <div class="card">
+        {% if book['cover_image_uri'] %}
+        <img src="{{ book['cover_image_uri'] }}" alt="{{ book['book_title'] }}">
+        {% else %}
+        <img src="{{ url_for('static', filename='images/no_cover.png') }}" alt="No Cover">
+        {% endif %}
+        <h3>{{ book['book_title'] }}</h3>
+        <div class="card-content">
+            <p><strong>Author</strong>: {{ book['author'] }}</p>
+            <p><strong>Genre</strong>: {{ book['main_genre'] }}</p>
+            {% if 'average_rating' in book %}
+            <p><strong>Rating</strong>: {{ book['average_rating'] }}</p>
+        </div>
+        {% endif %}
+        <p class="description" title="{{ book['description'] }}">
+            {{ " ".join(book['description'].split()[:30]) ~ "..." }}
+        </p>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="no-recs">No recommendations found.</p>
+{% endif %}
+
+    <section class="back-home">
+        <a href="{{ url_for('home') }}">Back to Home</a>
+    </section>
+    <footer>
+        <p>Author: Palcau Maria-Magdalena</p>
+        <p><a href="mailto:maria.palcau04@e-uvt.ro">maria.palcau04@e-uvt.ro</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoodRecs</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/static/images/music-book.png">
+</head>
+<body>
+    <header class="site-header">
+        <a href="{{ url_for('home') }}" class="logo">
+            <h1>MoodRecs</h1>
+        </a>
+        <p class="tagline">Upload Your Reading History</p>
+    </header>
+    <section class="info">
+        <p>Upload your Goodreads CSV file to improve recommendations based on your past reading.</p>
+    </section>
+
+    <section class="upload">
+        <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
+            <div class="file-input">
+                <input type="file" name="file" accept=".csv">
+            </div>
+            <button type="submit">Upload</button>
+        </form>
+    </section>
+    <section class="back-home">
+        <a href="{{ url_for('home') }}">Back to Home</a>
+    </section>
+
+    <footer>
+        <p>Author: Palcau Maria-Magdalena</p>
+        <p><a href="mailto:maria.palcau04@e-uvt.ro">maria.palcau04@e-uvt.ro</a></p>
+    </footer>
+</body>
+</html>

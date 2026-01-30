@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoodRecs</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/static/images/music-book.png">
+    <!--<a href="https://www.flaticon.com/free-icons/audiobook" title="audiobook icons">Audiobook icons created by Freepik - Flaticon</a>-->
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}" class="logo">
+            <h1>MoodRecs</h1>
+        </a>
+        <p class="tagline">Find your next read based on your mood!</p>
+    </header>
+
+    <section class="info">
+        <p>Just type what you are looking for or share your Spotify top songs and your reading history with us.</p>
+    </section>
+
+     <section class="search">
+        <h2>Search for Books</h2>
+        <form method="POST" action="{{ url_for('recommend') }}">
+            <div class="form">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" placeholder="Enter keywords or description">
+            </div>
+
+            <div class="form">
+                <label for="genre">Genre:</label>
+                <select id="genre" name="genre">
+                    <option value="All">All</option>
+                    {% for g in genres %}
+                        <option value="{{ g }}">{{ g }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form">
+                <label for="mood">Mood:</label>
+                <select id="mood" name="mood">
+                    <option value="">Any</option>
+                    {% for m in moods %}
+                        <option value="{{ m }}">{{ m }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit">Search Books</button>
+        </form>
+    </section>
+
+    <hr>
+
+     <section class="spotify">
+        <h3>Connect Spotify</h3>
+        <a class="button-link" href="{{ url_for('spotify_login') }}">Connect to Spotify</a>
+    </section>
+
+    <section class="upload-history">
+        <h3>Upload Reading History</h3>
+        <a class="button-link" href="{{ url_for('upload_file') }}">Upload Reading History</a>
+    </section>
+
+    <footer>
+        <p>Author: Palcau Maria-Magdalena</p>
+        <p><a href="mailto:maria.palcau04@e-uvt.ro">maria.palcau04@e-uvt.ro</a></p>
+    </footer>
+</body>
+</html>

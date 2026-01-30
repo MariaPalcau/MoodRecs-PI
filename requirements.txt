@@ -1,0 +1,14 @@
+Flask
+requests
+python-dotenv
+spotipy
+sentence-transformers
+transformers
+torch
+pandas
+numpy
+scikit-learn
+tqdm
+langdetect
+lyricsgenius
+werkzeug
