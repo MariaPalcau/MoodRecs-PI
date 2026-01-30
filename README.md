@@ -56,7 +56,7 @@ MoodRecs/
 # How to setup
 ```bash
 # Clone the Repository
-git clone https://github.com/MariaPalcau/MoodRecs
+git clone https://github.com/MariaPalcau/MoodRecs.git
 cd FlaskProject
 
 # Setup Virtual Environment
