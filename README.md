@@ -6,6 +6,7 @@ The application recommends books to a user based on:
 - Spotify listening mood
 - User reading history (books the user has read and rated)
 - Optional search queries (genre, description keywords, desired mood)
+  
 It combines these signals using text embeddings, emotion analysis, and mood filtering to generate personalized recommendations.
 
 # Features
@@ -14,10 +15,11 @@ It combines these signals using text embeddings, emotion analysis, and mood filt
   - audio: valence and energy from songs are used to determine the moods (excited, angry, relaxed, sad) with a score between -1 and 1
   - lyrics: each song is given a score between -1 and 1
   - both of them are combined according to this formula: audio_score\*0.6 + lyrics_score\*0.4
+  - the final score is then mapped to these moods: joy, neutral, sadness, anger
 - User book upload & analysis
   - only read books with more than a 3-star review are selected
   - for each book the description it is retrieved
-  - an analysis is done and for each book there are six emotions: 'anger', 'disgust', 'fear', 'joy', 'neutral', 'sadness', 'surprise' (with the relative scores)
+  - an analysis is done and for each book there are six emotions: anger, disgust, fear, joy, neutral, sadness, surprise (with the relative scores)
     - for the analysis two different models are used, one that supports only English books and another for books in other languages
   - at the end the text embeddings are computed for the user's books
 - Diversification of top-N recommendations
