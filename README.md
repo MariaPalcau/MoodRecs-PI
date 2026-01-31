@@ -50,7 +50,7 @@ MoodRecs/
 # Requirements
 - Python 3.9 or later
 - required libraries in requirements.txt
-- APIs for Spotify Developer Account, Google Books API key, Genius API key, Reccobeats API
+- Spotify Developer Account, Google Books API key, Genius API key, Reccobeats API
 
 # How to set up
 ```bash
