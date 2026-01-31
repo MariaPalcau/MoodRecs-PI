@@ -20,7 +20,6 @@ It combines these signals using text embeddings, emotion analysis, and mood filt
   - an analysis is done and for each book there are six emotions: 'anger', 'disgust', 'fear', 'joy', 'neutral', 'sadness', 'surprise' (with the relative scores)
     - for the analysis two different models are used, one that supports only English books and another for books in other languages
   - at the end the text embeddings are computed for the user's books
-- Mood boosting for similarity scoring
 - Diversification of top-N recommendations
   
 # Project Structure
