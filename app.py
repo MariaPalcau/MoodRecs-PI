@@ -1,3 +1,5 @@
+import shutil
+
 from flask import Flask, session, redirect, render_template, request, url_for
 import os, glob
 from werkzeug.utils import secure_filename
@@ -104,7 +106,7 @@ def get_user_moods():
     return moods
 
 def apply_mood_filter(df, moods):
-    """Filter books by one or more mood labels that have a score of at least 70."""
+    """Filter books by one or more mood labels that have a score of at least 0.7."""
     if not moods:
         return df
     moods = [m for m in moods if m in df.columns]
@@ -118,19 +120,11 @@ def diversification(df, top_n, k):
     top_k_df = df.head(k)
     return top_k_df.sample(n=top_n, random_state=None)
 
-def apply_mood_boost(df, moods):
-    """Boost similarity score using mood columns."""
-    boost = 0.2
-    for mood in moods:
-        df["similarity"] += df[mood] * boost
-    return df
-
 def recommend_books(description='', genre='All', mood=None, top_n=12, search_mode=False):
     """Main function for recommending books. If the search_mode is active then the description is embedded and
     searched based on similarity, genre and mood. If the user doesn't upload his reading history but gives access to his
     top tracks the recommendations are based on the mood from them. If the user uploaded his reading history then the
-    filtering is done by the similarity score and this score can be boosted using mood. All go through the diversification
-    process.
+    filtering is done by the similarity score. All go through the diversification process.
     :param description: Description of the book to get the recommendations for.
     :param genre: Genre of the book to get the recommendations for.
     :param mood: Mood to get the recommendations for.
@@ -165,6 +159,7 @@ def recommend_books(description='', genre='All', mood=None, top_n=12, search_mod
         moods_to_use = [spotify_mood] if spotify_mood else []
         filtered_df = apply_mood_filter(filtered_df, moods_to_use)
         filtered_df = filtered_df.sort_values(by='average_rating', ascending=False)
+        filtered_df = diversification(filtered_df, top_n=top_n, k=30)
         print("Top books (Spotify-only):")
         print(filtered_df[['book_title', 'author', 'average_rating']])
         return filtered_df.head(top_n)
@@ -172,7 +167,6 @@ def recommend_books(description='', genre='All', mood=None, top_n=12, search_mod
     filtered_df['similarity'] = similarity_scores
     filtered_df = filtered_df.sort_values(by='similarity', ascending=False)
     filtered_df = diversification(filtered_df, top_n=top_n, k=30)
-    filtered_df = apply_mood_boost(filtered_df, moods)
     return filtered_df.head(top_n)
 
 @app.route('/recommend', methods=['GET', 'POST'])
@@ -214,6 +208,7 @@ def logout():
     global user_books_df, user_embeddings
     user_books_df = None
     user_embeddings = None
+    shutil.rmtree("songs")
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
